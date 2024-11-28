@@ -1,0 +1,28 @@
+# urls.py   /csfe
+
+
+from django.conf import settings
+from django.urls import include, path
+from . import views
+
+app_name="cafe"
+
+urlpatterns = [    
+    path('', views.index_view, name='manager_home'),
+    path('menu_list_url/', views.menu_list, name="menu_list"),
+    path('menu_add_url/',views.menu_add, name="menu_add"), # 메뉴 추가 페이지
+    path('add_menu_data/', views.add_menu_data, name='add_menu_data'),
+    # 메뉴 디테일 페이지 추가
+    path('detail/<int:menu_id>/', views.menu_detail, name="menu_detail"),
+    path('add_option/<int:menu_id>/', views.add_option, name='add_option'),
+    path('add_option_data/', views.add_option_data, name='add_option_data'),
+    path('create/', views.create, name="menu_create"),
+    path('<int:pk>/update/', views.update, name="menu_update"),
+    path('<int:pk>/delete/', views.delete, name="menu_delete"),
+]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

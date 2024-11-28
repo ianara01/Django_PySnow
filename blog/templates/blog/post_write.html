@@ -1,0 +1,19 @@
+<! post_write.html  >
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>새 글 쓰기</title>
+</head>
+<body>
+    <h1>새 글 쓰기</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title"><br>
+        <label for="content">내용:</label>
+        <textarea id="content" name="content"></textarea><br>
+        <button type="submit" class="btn btn-primary">작성 완료</button>
+    </form>
+</body>
+</html>

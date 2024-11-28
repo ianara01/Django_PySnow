@@ -1,0 +1,26 @@
+<! post_detail.html /blog>
+
+{% extends 'blog/blog_base.html' %}
+{% load static %}
+{% block title %}Post Details{% endblock %}
+
+{% block blog_content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title text-center">{{ post.title }}</h2>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-1"><strong>Category:</strong> {{ post.category.name }}</p>
+            <p class="text-muted mb-3"><strong>Created at:</strong> {{ post.create_at|date:"Y-m-d H:i" }}</p>
+            <hr>
+            <p>{{ post.content }}</p>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{% url 'blog:index' %}" class="btn btn-secondary me-2">목록</a>
+            <a href="{% url 'blog:post_edit' post.id %}" class="btn btn-primary me-2">수정</a>
+            <a href="{% url 'blog:post_delete' post.id %}" class="btn btn-danger">삭제</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

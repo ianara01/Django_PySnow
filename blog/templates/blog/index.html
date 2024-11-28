@@ -1,0 +1,61 @@
+<! index.html /blog>
+
+{% extends 'blog/blog_base.html' %}
+{% load static %}
+{% block title %}Blog App{% endblock %}
+
+{% block blog_content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>
+            {% if category %}
+                {{ category.name }} - 게시글
+            {% else %}
+                전체 게시글
+            {% endif %}
+        </h2>
+        <a href="{% url 'blog:category_list' %}" class="btn btn-secondary btn-sm">카테고리 관리</a>
+    </div>
+
+    <div class="mb-4">
+        <a href="{% url 'blog:index' %}" class="btn btn-outline-primary btn-sm {% if not category %}active{% endif %}">전체</a>
+        {% for cat in categories %}
+            <a href="{% url 'blog:category_post_list' cat.id %}" class="btn btn-outline-primary btn-sm {% if category and category.id == cat.id %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                {% if category %}
+                    {{ category.name }}에 속한 게시글
+                {% else %}
+                    최신 게시글
+                {% endif %}
+            </h5>
+            <a href="{% url 'blog:post_write' %}" class="btn btn-primary btn-sm">새 글 쓰기</a>
+        </div>
+
+        <div class="card-body">
+            {% if posts %}
+                <div class="list-group">
+                    {% for post in posts %}
+                        <a href="{% url 'blog:post_detail' post.id %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="mb-1">{{ post.title }}</h5>
+                                <small class="text-muted">{{ post.create_at|date:"Y-m-d" }}</small>
+                            </div>
+                            <p class="mb-1 text-truncate">{{ post.content }}</p>
+                            <small class="text-muted">카테고리: {{ post.category.name }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-muted">게시글이 없습니다. 새 글을 작성해 보세요!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
